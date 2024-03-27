@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Специфичные стили */
+.container {
+    margin-top: 20px; /* Пример дополнительного стиля */
+}
+
+/* Дополнительные стили для формы */
+form {
+    border: 2px solid #ccc; /* Пример дополнительного стиля */
+}
+
+/* Дополнительные стили для формы ввода */
+input[type="text"],
+input[type="password"],
+select {
+    padding: 10px; /* Пример дополнительного стиля */
+}
