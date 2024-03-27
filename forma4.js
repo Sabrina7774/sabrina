@@ -1,3 +1,5 @@
+document.getElementById('theme-toggle-checkbox');
+document.getElementById('main-container');
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('registration-form');
     const themeToggleCheckbox = document.getElementById('theme-toggle-checkbox');
@@ -8,10 +10,34 @@ document.addEventListener('DOMContentLoaded', function () {
         themeToggleCheckbox.checked = true;
     }
 
+
     // Theme toggle
     themeToggleCheckbox.addEventListener('change', function () {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('theme', themeToggleCheckbox.checked ? 'dark' : 'light');
+
+        // Send theme change request to the server
+        const theme = themeToggleCheckbox.checked ? 'dark' : 'light';
+        fetch('/theme', {
+            method: 'POST',
+            body: JSON.stringify({ theme }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log(data); // Optional: Handle response from the server
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Optional: Handle error
+            });
     });
 
     // Form validation
@@ -25,25 +51,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function validateForm() {
         const name = document.getElementById('name-input').value.trim();
         const password = document.getElementById('password-input').value.trim();
-        const confirmPassword = document.getElementById('confirm-password-input').value.trim();
-        const email = document.getElementById('email-input').value.trim();
+        const userType = document.getElementById('user-type-input').value;
 
-        if (name === '' || password === '' || confirmPassword === '' || email === '') {
+        if (name === '' || password === '' || userType === '') {
             alert('All fields are required.');
             return false;
         }
 
-        if (password.length < 6) {
-            alert('Password must be at least 6 characters long.');
-            return false;
-        }
-
-        if (password !== confirmPassword) {
-            alert('Passwords do not match.');
-            return false;
-        }
-
-        // Add email validation here if needed
+        // Add more validation rules if needed
 
         return true;
     }
@@ -73,3 +88,5 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 });
+
+

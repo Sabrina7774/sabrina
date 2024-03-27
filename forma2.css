@@ -20,3 +20,8 @@ input[type="password"],
 select {
     padding: 10px; /* Пример дополнительного стиля */
 }
+
+
+.dark-mode{
+    background-color: darkslategrey;
+}
